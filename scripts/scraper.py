@@ -116,10 +116,7 @@ class PlayStoreScraper:
             filename = f"{bank_key.lower()}_raw.csv"
             path = os.path.join(self.save_dir, filename)
 
-            # 🔥 CHECK IF FILE EXISTS
-            if os.path.exists(path):
-                print(f"[SKIPPED] {filename} already exists. No scraping needed.")
-                continue
+           
 
             # Otherwise → scrape and save
             reviews_data = self.scrape_app(bank_key)
