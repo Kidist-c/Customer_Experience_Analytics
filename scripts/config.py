@@ -15,7 +15,7 @@ APP_IDS = {
 
 # Scraping preferences
 SCRAPING_CONFIG = {
-    "reviews_per_bank": 800,
+    "reviews_per_bank": 420,
     "country": "et",   # Ethiopia
     "lang": "en",      # English
     "sort": Sort.NEWEST,
