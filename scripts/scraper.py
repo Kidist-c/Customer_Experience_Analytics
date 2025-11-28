@@ -1,7 +1,7 @@
 import os
 import time
 import pandas as pd
-from google_play_scraper import reviews
+from google_play_scraper import reviews,Sort
 from scripts.config import APP_IDS, SCRAPING_CONFIG, DATA_PATHS, BANK_NAMES
 from datetime import datetime
 
@@ -38,12 +38,15 @@ class PlayStoreScraper:
         max_reviews = self.config["reviews_per_bank"]
         all_reviews = []
         batch_size = 200  # Google Play allows batch scraping
+        retries = 0
+        max_retries = self.config.get("max_retries", 5)
 
         print(f"\n[SCRAPING] {BANK_NAMES[bank_key]} ({app_id})")
         print(f"[INFO] Targeting {max_reviews} reviews")
+        
 
         # Continue until we reach the desired number of reviews
-        while len(all_reviews) < max_reviews:
+        while len(all_reviews) < max_reviews and retries < max_retries:
             try:
                 # Google Play scraper
                 r, _ = reviews(
@@ -53,6 +56,7 @@ class PlayStoreScraper:
                     sort=self.config["sort"],
                     count=min(batch_size, max_reviews - len(all_reviews))
                 )
+
 
                 if not r:
                     print("[INFO] No more reviews returned by API")
@@ -73,8 +77,10 @@ class PlayStoreScraper:
 
                 # Sleep to avoid rate limits
                 time.sleep(1)
+                retries = 0  # Reset retries if successful
 
             except Exception as e:
+                retries += 1
                 print(f"[ERROR] Exception occurred: {str(e)}. Retrying in 5s...")
                 time.sleep(5)
 

@@ -1,21 +1,24 @@
 from dotenv import  load_dotenv
 import os
+from google_play_scraper import Sort  # Add this import
 
 load_dotenv()
 
 # store Google play application Ids
 
 APP_IDS = {
-    "CBE": os.getenv("CBE_APP_ID"),
-    "BOA": os.getenv("BOA_APP_ID"),
-    "DASHEN": os.getenv("DASHENBANK_APP_ID")
+    "CBE": os.getenv("CBE_APP_ID", "com.combanketh.mobilebanking").strip(),
+    "BOA": os.getenv("BOA_APP_ID", "com.boa.boaMobileBanking").strip(),
+    "DASHEN": os.getenv("DASHEN_APP_ID", "com.dashen.dashensuperapp").strip()
 }
+
+
 # Scraping preferences
 SCRAPING_CONFIG = {
     "reviews_per_bank": 420,
     "country": "et",   # Ethiopia
     "lang": "en",      # English
-    "sort": "newest",
+    "sort": Sort.NEWEST,
     "max_retries": 3,
 }
 BANK_NAMES = {
