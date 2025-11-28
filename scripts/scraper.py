@@ -99,23 +99,32 @@ class PlayStoreScraper:
         # Filename: cbe_raw.csv, boa_raw.csv, dashen_raw.csv
         filename = f"{bank_key.lower()}_raw.csv"
         path = os.path.join(self.save_dir, filename)
+         # 🔥 CHECK IF FILE EXISTS
+       
 
         df.to_csv(path, index=False, encoding="utf-8")
         print(f"[SAVED] {len(df)} reviews saved → {path}")
 
     def run(self):
         """
-        Run scraper for all bank apps sequentially and save CSVs.
+        Run scraper for all bank apps.
+        Skips banks whose CSV already exists.
         """
-
         print("\n=== STARTING SCRAPING PROCESS ===\n")
 
         for bank_key in self.ids.keys():
-            # Scrape the app
-            reviews_data = self.scrape_app(bank_key)
+            filename = f"{bank_key.lower()}_raw.csv"
+            path = os.path.join(self.save_dir, filename)
 
-            # Save to CSV
+            # 🔥 CHECK IF FILE EXISTS
+            if os.path.exists(path):
+                print(f"[SKIPPED] {filename} already exists. No scraping needed.")
+                continue
+
+            # Otherwise → scrape and save
+            reviews_data = self.scrape_app(bank_key)
             self.save_csv(bank_key, reviews_data)
 
         print("\n=== SCRAPING COMPLETED ===\n")
+
 
