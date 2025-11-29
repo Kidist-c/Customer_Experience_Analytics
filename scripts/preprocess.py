@@ -19,10 +19,12 @@ class ReviewPreprocessor:
         - Normalize date → YYYY-MM-DD
         """
         # Drop missing reviews
-        df = df.dropna(subset=["review"])
+        df = df.dropna(subset=["review","review_id"])
 
         # Remove non-ASCII reviews (Amharic)
         df = df[df["review"].apply(lambda x: x.isascii())]
+           # Remove duplicates using review_id
+       
 
         # Convert rating to numeric
         if "rating" in df:

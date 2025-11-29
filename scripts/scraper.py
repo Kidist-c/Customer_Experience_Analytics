@@ -65,6 +65,7 @@ class PlayStoreScraper:
                 # Format each review
                 for item in r:
                     review_data = {
+                        "review_id":item.get("reviewId"),
                         "review": item.get("content"),
                         "rating": item.get("score"),
                         "date": item.get("at"),
