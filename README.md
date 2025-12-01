@@ -1,6 +1,6 @@
 ## Bank Mobile App Reviews-Data Collection And Analysis
 
-👨‍💻Problem Overview
+👨‍💻Projct Overview
 This project collects,cleans, Analyzes and stores User Review of three Ethiopian banks:
 Commercial Bank of Ethiopia (CBE)
 Bank of Abyssinia (BOA)
